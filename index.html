@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      <title>Collection</title>
+      <style>
+        :root { color-scheme: light dark; }
+        * { box-sizing: border-box; }
+        body {
+          margin: 0;
+          font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+          line-height: 1.4;
+          padding: 24px;
+          background: Canvas;
+          color: CanvasText;
+        }
+        header {
+          max-width: 1200px;
+          margin: 0 auto 16px;
+          display: flex;
+          gap: 12px;
+          align-items: end;
+          justify-content: space-between;
+        }
+        h1 { font-size: 20px; margin: 0; }
+        .count { opacity: 0.7; font-size: 12px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+          gap: 14px;
+        }
+        .card {
+          border: 1px solid color-mix(in oklab, CanvasText 15%, Canvas);
+          border-radius: 10px;
+          overflow: hidden;
+          background: color-mix(in oklab, Canvas 95%, CanvasText 5%);
+          transition: transform .12s ease, box-shadow .12s ease;
+        }
+        .card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.12); }
+        .thumb {
+          width: 100%;
+          aspect-ratio: 1 / 1;
+          object-fit: cover;
+          display: block;
+          background: repeating-conic-gradient(from 45deg, color-mix(in oklab, CanvasText 6%, Canvas) 0 25%, transparent 0 50%) 0 0 / 16px 16px;
+        }
+        .meta { padding: 8px 10px 10px; }
+        .title { font-size: 13px; margin: 0; }
+        .id { font-variant-numeric: tabular-nums; opacity: .75; font-size: 12px; }
+        @media (min-width: 1400px) {
+          .grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+        }
+      </style>
+      <script>
+        // Lista original (comentada acima no arquivo), convertida aqui como string para parsing automático
+        const rawList = `
+  "ID","DESCRIÇÃO"
+  "1","1x2x2 Z-CUBE STICKER BLACK/COLOR"
+  "2","1x2x3 QIYI STICKERLESS BLACK/COLOR"
+  "3","1x3x3 QIYI STICKERLESS BLACK/COLOR"
+  "4","2x2x3 MOYU STICKERLESS BLACK/COLOR"
+  "5","2x3x3 QIYI STICKER BLACK/COLOR"
+  "6","3x3 MOYU BIG 9CM STICKERLESS COLOR"
+  "7","2x2 SPEED CUBE TIME MACHINE STICKERLESS COLOR"
+  "8","1x3x3 QIYI WINDMILL SPINNER STICKERLESS BLACK/COLOR"
+  "9","1x3x3 QIYI FIDGET SPINNER STICKERLESS BLACK/COLOR"
+  "10","3x3 MOYU STICKERLESS COLOR MINI 3CM"
+  "11","3x3 MOYU STICKERLESS MONO BLACK"
+  "12","3x3 MOYU STICKERLESS MONO WHITE"
+  "13","3x3 MOYU STICKERLESS MONO RED"
+  "14","3x3 MOYU STICKERLESS MONO ORANGE"
+  "15","3x3 MOYU STICKERLESS MONO YELLOW"
+  "16","3x3 MOYU STICKERLESS MONO GREEN"
+  "17","3x3 MOYU STICKERLESS MONO BLUE"
+  "18","PYRAMORPHIX 2x2 QIYI STICKERLESS COLOR"
+  "19","PYRAMINX MOYU STICKERLESS COLOR"
+  "20","PYRAMINX MOYU STICKERLESS MONO RED"
+  "21","PYRAMINX MOYU STICKERLESS MONO GREEN"
+  "22","PYRAMINX MOYU STICKERLESS MONO BLUE"
+  "23","PYRAMINX MOYU STICKERLESS MONO YELLOW"
+  "24","PYRAMINX MOYU STICKER BLACK/COLOR"
+  "25","PYRAMINX MOYU STICKER BLACK/COLOR"
+  "26","PYRAMINX QIYI STICKERLESS STICKERLESS/CARBON"
+  "27","PYRAMINX LITE Z-CUBE STICKER BLACK/COLOR"
+  "28","PYRAMINX LITE QIYI ICE"
+  "29","3x3 QIYI ICE"
+  "30","FISHER QIYI ICE"
+  "31","WINDMILL QIYI ICE"
+  "32","AXIS QIYI ICE"
+  "33","MIRROR QIYI ICE"
+  "34","IVY QIYI ICE"
+  "35","2x2 MOYU STICKERLESS COLOR"
+  "36","3x3 MOYU STICKERLESS COLOR"
+  "37","4x4 MOYU STICKERLESS COLOR"
+  "38","5x5 MOYU STICKERLESS COLOR"
+  "39","6x6 MOYU STICKERLESS COLOR"
+  "40","7x7 MOYU STICKERLESS COLOR"
+  "41","MIRROR 3x3 STICKERLESS BLACK/COLOR"
+  "42","MIRROR 3x3 STICKERLESS BLACK/CYAN"
+  "43","MIRROR 3x3 STICKERLESS GREEN"
+  "44","MIRROR 3x3 STICKER FLUORESCENTE"
+  "45","MIRROR 3x3 STICKER BLACK/BLUE"
+  "46","MIRROR 3x3 STICKER BLACK/GOLD"
+  "47","MIRROR 2x2 STICKER BLACK/GOLD"
+  "48","MIRROR AXIS STICKER BLACK/GOLD"
+  "49","MIRROR 3x3 STICKER BLACK/SILVER"
+  "50","MIRROR 2x2 STICKER BLACK/SILVER"
+  "51","MIRROR FISHER STICKER BLACK/SILVER"
+  "52","MIRROR WINDMILL STICKER BLACK/SILVER"
+  "53","GEAR 2x2 SHIFT BALL QIYI STICKERLESS BLACK/COLOR"
+  "54","GEAR 2x2 SHIFT QIYI STICKERLESS BLACK/COLOR"
+  "55","GEAR 3x3 BALL QIYI STICKERLESS BLACK/COLOR"
+  "56","GEAR 3x3 QIYI STICKERLESS BLACK/COLOR"
+  "57","GEAR 3x3 KUNG FU STICKERLESS BLACK/COLOR"
+  "58","3x3 MOYU STICKERLESS CARBON"
+  "59","3x3 QIYI STICKERLESS CARBON"
+  "60","3x3 QIYI STICKER BLACK/COLOR"
+  "61","VOID 3x3 SANDWICH QIYI STICKERLESS COLOR"
+  "62","3x3 BALLS YJ STICKERLESS COLOR"
+  "63","3x3 LEGO FANXIN STICKERLESS BLACK/COLOR"
+  "64","3x3 LEGO FANXIN STICKERLESS WHITE/COLOR"
+  "65","3x3 BRAILLE BLIND TOUCH STICKERLESS BLACK/COLOR"
+  "66","MASTERMORPHIX 3x3 MOYU STICKERLESS COLOR"
+  "67","SIAMES 3x3 TIPO 1 MOYU STICKERLESS COLOR"
+  "68","SIAMES 3x3 TIPO 2 MOYU STICKERLESS COLOR"
+  "69","MEGAMINX 2x2 MOYU STICKERLESS COLOR"
+  "70","MEGAMINX 3x3 MOYU STICKERLESS COLOR"
+  "71","OCTAEDRO FTO 3x3 FANXIN STICKERLESS BLACK/COLOR"
+  "72","HEXAGONO 3x3 FANXIN STICKERLESS BLACK/COLOR"
+  "73","SKEW MOYU STICKERLESS COLOR"
+  "74","SKEW MIX XMAN WINGY STICKERLESS BLACK/COLOR"
+  "75","SQUARE 1 MOYU STICKERLESS COLOR"
+  "76","FISHER MOYU STICKERLESS COLOR"
+  "77","WINDMILL MOYU STICKERLESS COLOR"
+  "78","FOUR LEAF CLOVER MOYU STICKERLESS COLOR"
+  "79","POLARIS MOYU STICKERLESS COLOR"
+  "80","MAPLE LEAVES SKEW MOYU STICKERLESS COLOR"
+  "81","PANDORA MOYU STICKER BLACK/COLOR"
+  "82","IVY QIYI STICKER BLACK/COLOR"
+  "83","FISHER QIYI STICKER BLACK/COLOR"
+  "84","TRIEDON 3x3 FANXIN STICKERLESS COLOR"
+  "85","PUPPET 1 MOYU STICKERLESS COLOR"
+  "86","PUPPET 2 MOYU STICKERLESS COLOR"
+  "87","SKEW X FANXIN STICKERLESS COLOR"
+  "88","STAR QIYI STICKERLESS COLOR"
+  "89","TWIST 3x3 QIYI STICKERLESS COLOR"
+  "90","AXIS QIYI STICKERLESS COLOR"
+  "91","FINHOP TIAN YUAN 1 1x1 YJ STICKERLESS COLOR"
+  "92","FINHOP TIAN YUAN 2 1x1 YJ STICKERLESS COLOR"
+  "93","FINHOP TIAN YUAN 3 1x1 YJ STICKERLESS COLOR"
+  "94","DINO 2x2 QIYI STICKER BLACK/COLOR"
+  "95","ROUND 3x3 QIYI STICKERLESS COLOR"
+  "96","OCTAGONO 3x3 JIEHUI STICKERLESS COLOR"
+  "97","3D CUBE"
+  "98","3x3 RUBIKS 1999"
+  "99","3x3 1,99"
+  "100","CUSTOM 2x2 FACE GREEN"
+  "101","CUSTOM 2x2 FACE BLUE"
+  "102","CUSTOM 2x2 FACE RED"
+  "103","CUSTOM 2x2 FACE YELLOW"
+  "104","CUSTOM 3x3 CALENDAR"
+  "105","3x3 MICRO 10MM STICKER BLACK/COLOR"
+  "106","3x3 GAN MINI 28MM STICKERLESS BLACK/COLOR"
+  "107","3x3 GAN 15 MAGLEV (EDIÇÃO ESPECIAL 10 ANOS) STICKERLESS COLOR"
+  "108","2x2 GAN 251 LEAP (EDIÇÃO ESPECIAL 10 ANOS) STICKERLESS COLOR"
+  "109","3x3 GAN 356 ME (EDIÇÃO ESPECIAL 10 ANOS) STICKERLESS COLOR"
+  "110","3x3 GAN 330 (EDIÇÃO ESPECIAL 10 ANOS) STICKERLESS COLOR"
+  "111","3x3 GAN 330 STICKERLESS COLOR"
+  "112","3x3 GAN 15 MAGLEV STICKERLESS COLOR"
+  "113","3x3 GAN 356 MAGLEV STICKERLESS COLOR"
+  "114","3x3 GAN 356 M STICKERLESS COLOR"
+  "115","3x3 GAN 356 ME (EDIÇÃO ESPECIAL POKEMON - PIKACHU) STICKERLESS COLOR"
+  "116","3x3 GAN AIR STICKERLESS BLACK/COLOR"
+  "117","3x3 GAN AIR (EDIÇÃO ESPECIAL - PARIS 2017) STICKERLESS BLACK/COLOR"
+  "118","3x3 RUBIKS (EDIÇÃO ESPECIAL - F1 MERCEDES) STICKERLESS COLOR/CARBON"
+  "119","3x3 RUBIKS (EDIÇÃO ESPECIAL - WEDNESDAY) STICKERLESS BLACK/GRAY"
+  "120","3x3 RUBIKS (EDIÇÃO ESPECIAL - DISNEY 100 ANOS) STICKERLESS SILVER/COLOR"
+  "121","3x3 RUBIKS IMPOSSIVEL STICKERLESS BLACK/COLOR"
+  "122","3x3 RUBIKS PHANTOM STICKERLESS BLACK/COLOR"
+  "123","VOID 3x3 MAGNETIC QIYI STICKERLESS COLOR"
+  "124","1x1"
+  "125","OCTAEDRO FTO 2x2 QIYI MAGNETIC STICKERLESS BLACK/COLOR"
+  "126","OCTAEDRO FTO 3x3 QIYI MAGNETIC STICKERLESS BLACK/COLOR"
+  `;
+
+        // Converte rawList em um array de objetos { id: number, name: string }
+        const collection = rawList
+          .split(/\r?\n/)
+          .map(l => l.trim())
+          .filter(l => l)
+          .map(line => {
+            const m = line.match(/^"\s*(\d+)\s*",\s*"\s*(.+?)\s*"$/);
+            if (!m) return null;
+            return { id: Number(m[1]), name: m[2] };
+          })
+          .filter(Boolean)
+          .sort((a, b) => a.name.localeCompare(b.name));
+
+        function imgPlaceholderDataURI() {
+          const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'>
+            <defs>
+              <linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>
+                <stop offset='0%' stop-color='#ccc'/>
+                <stop offset='100%' stop-color='#eee'/>
+              </linearGradient>
+            </defs>
+            <rect fill='url(#g)' width='400' height='400'/>
+            <g fill='#666' font-family='Segoe UI, Arial, sans-serif' text-anchor='middle'>
+              <text x='200' y='200' font-size='22'>Imagem não encontrada</text>
+            </g>
+          </svg>`;
+          return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+        }
+
+        function handleImgError(ev) {
+          const img = ev.target;
+          const tried = img.dataset.tried || "";
+          const id = img.getAttribute('data-id');
+          if (tried !== 'jpg') {
+            img.dataset.tried = 'jpg';
+            img.src = `imgs/${id}.png`;
+          } else {
+            img.onerror = null;
+            img.src = imgPlaceholderDataURI();
+          }
+        }
+
+        function createCard(item) {
+          const div = document.createElement('article');
+          div.className = 'card';
+
+          const img = document.createElement('img');
+          img.className = 'thumb';
+          img.loading = 'lazy';
+          img.decoding = 'async';
+          img.alt = `${item.name}`;
+          img.setAttribute('data-id', String(item.id));
+          img.src = `imgs/${item.id}.jpg`;
+          img.onerror = handleImgError;
+
+          const meta = document.createElement('div');
+          meta.className = 'meta';
+
+          const title = document.createElement('p');
+          title.className = 'title';
+          title.textContent = item.name;
+
+          const pid = document.createElement('div');
+          pid.className = 'id';
+          pid.textContent = `#${item.id}`;
+
+          meta.appendChild(title);
+          meta.appendChild(pid);
+          div.appendChild(img);
+          div.appendChild(meta);
+          return div;
+        }
+
+        function renderGrid() {
+          const grid = document.getElementById('grid');
+          const count = document.getElementById('count');
+          if (!grid) return;
+          const frag = document.createDocumentFragment();
+          collection.forEach(item => frag.appendChild(createCard(item)));
+          grid.innerHTML = '';
+          grid.appendChild(frag);
+          if (count) count.textContent = `${collection.length}`;
+        }
+
+        document.addEventListener('DOMContentLoaded', renderGrid);
+      </script>
+    <body>
+      <header>
+        <h1>Cubos</h1>
+        <div class="count" aria-live="polite"><span id="count">0</span> itens</div>
+      </header>
+      <main class="container">
+        <section id="grid" class="grid" aria-label="Grade de cubos"></section>
+      </main>
+    </body>
+  </head>
+  <body></body>
+</html>
