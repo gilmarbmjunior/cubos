@@ -90,153 +90,662 @@
       }
     </style>
     <script>
-      // Lista original (comentada acima no arquivo), convertida aqui como string para parsing automático
-      const rawList = `
-  "ID","DESCRIÇÃO"
-  "1","1x2x2 Z-CUBE STICKER BLACK/COLOR"
-  "2","1x2x3 QIYI STICKERLESS BLACK/COLOR"
-  "3","1x3x3 QIYI STICKERLESS BLACK/COLOR"
-  "4","2x2x3 MOYU STICKERLESS BLACK/COLOR"
-  "5","2x3x3 QIYI STICKER BLACK/COLOR"
-  "6","3x3 MOYU BIG 9CM STICKERLESS COLOR"
-  "7","2x2 SPEED CUBE TIME MACHINE STICKERLESS COLOR"
-  "8","1x3x3 QIYI WINDMILL SPINNER STICKERLESS BLACK/COLOR"
-  "9","1x3x3 QIYI FIDGET SPINNER STICKERLESS BLACK/COLOR"
-  "10","3x3 MOYU STICKERLESS COLOR MINI 3CM"
-  "11","3x3 MOYU STICKERLESS MONO BLACK"
-  "12","3x3 MOYU STICKERLESS MONO WHITE"
-  "13","3x3 MOYU STICKERLESS MONO RED"
-  "14","3x3 MOYU STICKERLESS MONO ORANGE"
-  "15","3x3 MOYU STICKERLESS MONO YELLOW"
-  "16","3x3 MOYU STICKERLESS MONO GREEN"
-  "17","3x3 MOYU STICKERLESS MONO BLUE"
-  "18","PYRAMORPHIX 2x2 QIYI STICKERLESS COLOR"
-  "19","PYRAMINX MOYU STICKERLESS COLOR"
-  "20","PYRAMINX MOYU STICKERLESS MONO RED"
-  "21","PYRAMINX MOYU STICKERLESS MONO GREEN"
-  "22","PYRAMINX MOYU STICKERLESS MONO BLUE"
-  "23","PYRAMINX MOYU STICKERLESS MONO YELLOW"
-  "24","PYRAMINX MOYU STICKER BLACK/COLOR"
-  "25","PYRAMINX MOYU STICKER BLACK/COLOR"
-  "26","PYRAMINX QIYI STICKERLESS STICKERLESS/CARBON"
-  "27","PYRAMINX LITE Z-CUBE STICKER BLACK/COLOR"
-  "28","PYRAMINX LITE QIYI ICE"
-  "29","3x3 QIYI ICE"
-  "30","FISHER QIYI ICE"
-  "31","WINDMILL QIYI ICE"
-  "32","AXIS QIYI ICE"
-  "33","MIRROR QIYI ICE"
-  "34","IVY QIYI ICE"
-  "35","2x2 MOYU STICKERLESS COLOR"
-  "36","3x3 MOYU STICKERLESS COLOR"
-  "37","4x4 MOYU STICKERLESS COLOR"
-  "38","5x5 MOYU STICKERLESS COLOR"
-  "39","6x6 MOYU STICKERLESS COLOR"
-  "40","7x7 MOYU STICKERLESS COLOR"
-  "41","MIRROR 3x3 STICKERLESS BLACK/COLOR"
-  "42","MIRROR 3x3 STICKERLESS BLACK/CYAN"
-  "43","MIRROR 3x3 STICKERLESS GREEN"
-  "44","MIRROR 3x3 STICKER FLUORESCENTE"
-  "45","MIRROR 3x3 STICKER BLACK/BLUE"
-  "46","MIRROR 3x3 STICKER BLACK/GOLD"
-  "47","MIRROR 2x2 STICKER BLACK/GOLD"
-  "48","MIRROR AXIS STICKER BLACK/GOLD"
-  "49","MIRROR 3x3 STICKER BLACK/SILVER"
-  "50","MIRROR 2x2 STICKER BLACK/SILVER"
-  "51","MIRROR FISHER STICKER BLACK/SILVER"
-  "52","MIRROR WINDMILL STICKER BLACK/SILVER"
-  "53","GEAR 2x2 SHIFT BALL QIYI STICKERLESS BLACK/COLOR"
-  "54","GEAR 2x2 SHIFT QIYI STICKERLESS BLACK/COLOR"
-  "55","GEAR 3x3 BALL QIYI STICKERLESS BLACK/COLOR"
-  "56","GEAR 3x3 QIYI STICKERLESS BLACK/COLOR"
-  "57","GEAR 3x3 KUNG FU STICKERLESS BLACK/COLOR"
-  "58","3x3 MOYU STICKERLESS CARBON"
-  "59","3x3 QIYI STICKERLESS CARBON"
-  "60","3x3 QIYI STICKER BLACK/COLOR"
-  "61","VOID 3x3 SANDWICH QIYI STICKERLESS COLOR"
-  "62","3x3 BALLS YJ STICKERLESS COLOR"
-  "63","3x3 LEGO FANXIN STICKERLESS WHITE/COLOR"
-  "64","3x3 LEGO FANXIN STICKERLESS BLACK/COLOR"
-  "65","3x3 BRAILLE BLIND TOUCH STICKERLESS BLACK/COLOR"
-  "66","MASTERMORPHIX 3x3 MOYU STICKERLESS COLOR"
-  "67","SIAMES 3x3 TIPO 1 MOYU STICKERLESS COLOR"
-  "68","SIAMES 3x3 TIPO 2 MOYU STICKERLESS COLOR"
-  "69","MEGAMINX 2x2 MOYU STICKERLESS COLOR"
-  "70","MEGAMINX 3x3 MOYU STICKERLESS COLOR"
-  "71","OCTAEDRO FTO 3x3 FANXIN STICKERLESS BLACK/COLOR"
-  "72","HEXAGONO 3x3 FANXIN STICKERLESS BLACK/COLOR"
-  "73","SKEW MOYU STICKERLESS COLOR"
-  "74","SKEW MIX XMAN WINGY STICKERLESS BLACK/COLOR"
-  "75","SQUARE 1 MOYU STICKERLESS COLOR"
-  "76","FISHER MOYU STICKERLESS COLOR"
-  "77","WINDMILL MOYU STICKERLESS COLOR"
-  "78","FOUR LEAF CLOVER MOYU STICKERLESS COLOR"
-  "79","POLARIS MOYU STICKERLESS COLOR"
-  "80","MAPLE LEAVES SKEW MOYU STICKERLESS COLOR"
-  "81","PANDORA MOYU STICKER BLACK/COLOR"
-  "82","IVY QIYI STICKER BLACK/COLOR"
-  "83","FISHER QIYI STICKER BLACK/COLOR"
-  "84","TRIEDON 3x3 FANXIN STICKERLESS COLOR"
-  "85","PUPPET 1 MOYU STICKERLESS COLOR"
-  "86","PUPPET 2 MOYU STICKERLESS COLOR"
-  "87","SKEW X FANXIN STICKERLESS COLOR"
-  "88","STAR QIYI STICKERLESS COLOR"
-  "89","TWIST 3x3 QIYI STICKERLESS COLOR"
-  "90","AXIS QIYI STICKERLESS COLOR"
-  "91","FINHOP TIAN YUAN 1 1x1 YJ STICKERLESS COLOR"
-  "92","FINHOP TIAN YUAN 2 1x1 YJ STICKERLESS COLOR"
-  "93","FINHOP TIAN YUAN 3 1x1 YJ STICKERLESS COLOR"
-  "94","DINO 2x2 QIYI STICKER BLACK/COLOR"
-  "95","ROUND 3x3 QIYI STICKERLESS COLOR"
-  "96","OCTAGONO 3x3 JIEHUI STICKERLESS COLOR"
-  "97","3D CUBE"
-  "98","3x3 RUBIKS 1999"
-  "99","3x3 1,99"
-  "100","CUSTOM 2x2 FACE GREEN"
-  "101","CUSTOM 2x2 FACE BLUE"
-  "102","CUSTOM 2x2 FACE RED"
-  "103","CUSTOM 2x2 FACE YELLOW"
-  "104","CUSTOM 3x3 CALENDAR"
-  "105","3x3 MICRO 10MM STICKER BLACK/COLOR"
-  "106","3x3 GAN MINI 28MM STICKERLESS BLACK/COLOR"
-  "107","3x3 GAN 15 MAGLEV (EDIÇÃO ESPECIAL 10 ANOS) STICKERLESS COLOR"
-  "108","2x2 GAN 251 LEAP (EDIÇÃO ESPECIAL 10 ANOS) STICKERLESS COLOR"
-  "109","3x3 GAN 356 ME (EDIÇÃO ESPECIAL 10 ANOS) STICKERLESS COLOR"
-  "110","3x3 GAN 330 (EDIÇÃO ESPECIAL 10 ANOS) STICKERLESS COLOR"
-  "111","3x3 GAN 330 STICKERLESS COLOR"
-  "112","3x3 GAN 15 MAGLEV STICKERLESS COLOR"
-  "113","3x3 GAN 356 MAGLEV STICKERLESS COLOR"
-  "114","3x3 GAN 356 M STICKERLESS COLOR"
-  "115","3x3 GAN 356 ME (EDIÇÃO ESPECIAL POKEMON - PIKACHU) STICKERLESS COLOR"
-  "116","3x3 GAN AIR STICKERLESS BLACK/COLOR"
-  "117","3x3 GAN AIR (EDIÇÃO ESPECIAL - PARIS 2017) STICKERLESS BLACK/COLOR"
-  "118","3x3 RUBIKS (EDIÇÃO ESPECIAL - F1 MERCEDES) STICKERLESS COLOR/CARBON"
-  "119","3x3 RUBIKS (EDIÇÃO ESPECIAL - WEDNESDAY) STICKERLESS BLACK/GRAY"
-  "120","3x3 RUBIKS (EDIÇÃO ESPECIAL - DISNEY 100 ANOS) STICKERLESS SILVER/COLOR"
-  "121","3x3 RUBIKS IMPOSSIVEL STICKERLESS BLACK/COLOR"
-  "122","3x3 RUBIKS PHANTOM STICKERLESS BLACK/COLOR"
-  "123","VOID 3x3 MAGNETIC QIYI STICKERLESS COLOR"
-  "124","1x1"
-  "125","OCTAEDRO FTO 2x2 QIYI MAGNETIC STICKERLESS BLACK/COLOR"
-  "126","OCTAEDRO FTO 3x3 QIYI MAGNETIC STICKERLESS BLACK/COLOR"
-  "127","RAINBOW BALL FANXIN BRANCO 12"
-  "128","RAINBOW BALL FANXIN BRANCO 20"
-  "129","3x3 CYCLONE BOYS METÁLICO MAGNÉTICO STICKERLESS COLOR"
-  "130","MEGAMINX 3x3 MOYU STICKER BLACK/COLOR"
-  `;
+      // Lista de objetos com id e name
+      const rawList = [
+        {
+          id: 1,
+          name: "1x2x2 Z-CUBE STICKER BLACK/COLOR",
+          new: "CUBE 1x2x2 ",
+        },
+        {
+          id: 2,
+          name: "1x2x3 QIYI STICKERLESS BLACK/COLOR",
+          new: "CUBE 1x2x3 ",
+        },
+        {
+          id: 3,
+          name: "1x3x3 QIYI STICKERLESS BLACK/COLOR",
+          new: "CUBE 1x3x3 ",
+        },
+        {
+          id: 4,
+          name: "2x2x3 MOYU STICKERLESS BLACK/COLOR",
+          new: "CUBE 2x2x3 ",
+        },
+        {
+          id: 5,
+          name: "2x3x3 QIYI STICKER BLACK/COLOR",
+          new: "CUBE 2x3x3 ",
+        },
+        {
+          id: 6,
+          name: "3x3 MOYU BIG 9CM STICKERLESS COLOR",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 7,
+          name: "2x2 SPEED CUBE TIME MACHINE STICKERLESS COLOR",
+          new: "CUBE 2x2 ",
+        },
+        {
+          id: 8,
+          name: "1x3x3 QIYI WINDMILL SPINNER STICKERLESS BLACK/COLOR",
+          new: "SPINNER WINDMILL 1x3x3 ",
+        },
+        {
+          id: 9,
+          name: "1x3x3 QIYI FIDGET SPINNER STICKERLESS BLACK/COLOR",
+          new: "SPINNER FIDGET 1x3x3 ",
+        },
+        {
+          id: 10,
+          name: "3x3 MOYU STICKERLESS COLOR MINI 3CM",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 11,
+          name: "3x3 MOYU STICKERLESS MONO BLACK",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 12,
+          name: "3x3 MOYU STICKERLESS MONO WHITE",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 13,
+          name: "3x3 MOYU STICKERLESS MONO RED",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 14,
+          name: "3x3 MOYU STICKERLESS MONO ORANGE",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 15,
+          name: "3x3 MOYU STICKERLESS MONO YELLOW",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 16,
+          name: "3x3 MOYU STICKERLESS MONO GREEN",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 17,
+          name: "3x3 MOYU STICKERLESS MONO BLUE",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 18,
+          name: "PYRAMORPHIX 2x2 QIYI STICKERLESS COLOR",
+          new: "PYRAMORPHIX ",
+        },
+        {
+          id: 19,
+          name: "PYRAMINX MOYU STICKERLESS COLOR",
+          new: "PYRAMINX ",
+        },
+        {
+          id: 20,
+          name: "PYRAMINX MOYU STICKERLESS MONO RED",
+          new: "PYRAMINX ",
+        },
+        {
+          id: 21,
+          name: "PYRAMINX MOYU STICKERLESS MONO GREEN",
+          new: "PYRAMINX ",
+        },
+        {
+          id: 22,
+          name: "PYRAMINX MOYU STICKERLESS MONO BLUE",
+          new: "PYRAMINX ",
+        },
+        {
+          id: 23,
+          name: "PYRAMINX MOYU STICKERLESS MONO YELLOW",
+          new: "PYRAMINX ",
+        },
+        {
+          id: 24,
+          name: "PYRAMINX MOYU STICKER BLACK/COLOR",
+          new: "PYRAMINX ",
+        },
+        {
+          id: 25,
+          name: "PYRAMINX MOYU STICKER BLACK/COLOR",
+          new: "PYRAMINX ",
+        },
+        {
+          id: 26,
+          name: "PYRAMINX QIYI STICKERLESS STICKERLESS/CARBON",
+          new: "PYRAMINX ",
+        },
+        {
+          id: 27,
+          name: "PYRAMINX LITE Z-CUBE STICKER BLACK/COLOR",
+          new: "PYRAMINX LITE ",
+        },
+        {
+          id: 28,
+          name: "PYRAMINX LITE QIYI ICE",
+          new: "PYRAMINX LITE ",
+        },
+        {
+          id: 29,
+          name: "3x3 QIYI ICE",
+          new: "CUBE 3x3",
+        },
+        {
+          id: 30,
+          name: "FISHER QIYI ICE",
+          new: "FISHER CUBE ",
+        },
+        {
+          id: 31,
+          name: "WINDMILL QIYI ICE",
+          new: "WINDMILL CUBE ",
+        },
+        {
+          id: 32,
+          name: "AXIS QIYI ICE",
+          new: "AXIS CUBE ",
+        },
+        {
+          id: 33,
+          name: "MIRROR QIYI ICE",
+          new: "MIRROR BLOCK 3x3 ",
+        },
+        {
+          id: 34,
+          name: "IVY QIYI ICE",
+          new: "CUBE ",
+        },
+        {
+          id: 35,
+          name: "2x2 MOYU STICKERLESS COLOR",
+          new: "CUBE 2x2 ",
+        },
+        {
+          id: 36,
+          name: "3x3 MOYU STICKERLESS COLOR",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 37,
+          name: "4x4 MOYU STICKERLESS COLOR",
+          new: "CUBE 4x4 ",
+        },
+        {
+          id: 38,
+          name: "5x5 MOYU STICKERLESS COLOR",
+          new: "CUBE 5x5 ",
+        },
+        {
+          id: 39,
+          name: "6x6 MOYU STICKERLESS COLOR",
+          new: "CUBE 6x6 ",
+        },
+        {
+          id: 40,
+          name: "7x7 MOYU STICKERLESS COLOR",
+          new: "CUBE 7x7 ",
+        },
+        {
+          id: 41,
+          name: "MIRROR 3x3 STICKERLESS BLACK/COLOR",
+          new: "MIRROR BLOCK 3x3 ",
+        },
+        {
+          id: 42,
+          name: "MIRROR 3x3 STICKERLESS BLACK/CYAN",
+          new: "MIRROR BLOCK 3x3 ",
+        },
+        {
+          id: 43,
+          name: "MIRROR 3x3 STICKERLESS GREEN",
+          new: "MIRROR BLOCK 3x3 ",
+        },
+        {
+          id: 44,
+          name: "MIRROR 3x3 STICKER FLUORESCENTE",
+          new: "MIRROR BLOCK 3x3 ",
+        },
+        {
+          id: 45,
+          name: "MIRROR 3x3 STICKER BLACK/BLUE",
+          new: "MIRROR BLOCK 3x3 ",
+        },
+        {
+          id: 46,
+          name: "MIRROR 3x3 STICKER BLACK/GOLD",
+          new: "MIRROR BLOCK 3x3 ",
+        },
+        {
+          id: 47,
+          name: "MIRROR 2x2 STICKER BLACK/GOLD",
+          new: "MIRROR BLOCK 2x2 ",
+        },
+        {
+          id: 48,
+          name: "MIRROR AXIS STICKER BLACK/GOLD",
+          new: "MIRROR BLOCK AXIS ",
+        },
+        {
+          id: 49,
+          name: "MIRROR 3x3 STICKER BLACK/SILVER",
+          new: "MIRROR BLOCK 3x3 ",
+        },
+        {
+          id: 50,
+          name: "MIRROR 2x2 STICKER BLACK/SILVER",
+          new: "MIRROR BLOCK 2x2 ",
+        },
+        {
+          id: 51,
+          name: "MIRROR FISHER STICKER BLACK/SILVER",
+          new: "MIRROR BLOCK FISHER ",
+        },
+        {
+          id: 52,
+          name: "MIRROR WINDMILL STICKER BLACK/SILVER",
+          new: "MIRROR BLOCK WINDMILL ",
+        },
+        {
+          id: 53,
+          name: "GEAR 2x2 SHIFT BALL QIYI STICKERLESS BLACK/COLOR",
+          new: "GEAR BALL SHIFT 2x2",
+        },
+        {
+          id: 54,
+          name: "GEAR 2x2 SHIFT QIYI STICKERLESS BLACK/COLOR",
+          new: "GEAR CUBE SHIFT 2x2",
+        },
+        {
+          id: 55,
+          name: "GEAR 3x3 BALL QIYI STICKERLESS BLACK/COLOR",
+          new: "GEAR BALL 3x3",
+        },
+        {
+          id: 56,
+          name: "GEAR 3x3 QIYI STICKERLESS BLACK/COLOR",
+          new: "GEAR CUBE 3x3",
+        },
+        {
+          id: 57,
+          name: "GEAR 3x3 KUNG FU STICKERLESS BLACK/COLOR",
+          new: "GEAR CUBE 3x3",
+        },
+        {
+          id: 58,
+          name: "3x3 MOYU STICKERLESS CARBON",
+          new: "CUBE 3x3",
+        },
+        {
+          id: 59,
+          name: "3x3 QIYI STICKERLESS CARBON",
+          new: "CUBE 3x3",
+        },
+        {
+          id: 60,
+          name: "3x3 QIYI STICKER BLACK/COLOR",
+          new: "CUBE 3x3",
+        },
+        {
+          id: 61,
+          name: "VOID 3x3 SANDWICH QIYI STICKERLESS COLOR",
+          new: "VOID CUBE 3x3",
+        },
+        {
+          id: 62,
+          name: "3x3 BALLS YJ STICKERLESS COLOR",
+          new: "CUBE BALLS 3x3",
+        },
+        {
+          id: 63,
+          name: "3x3 LEGO FANXIN STICKERLESS WHITE/COLOR",
+          new: "LEGO CUBE 3x3",
+        },
+        {
+          id: 64,
+          name: "3x3 LEGO FANXIN STICKERLESS BLACK/COLOR",
+          new: "LEGO CUBE 3x3",
+        },
+        {
+          id: 65,
+          name: "3x3 BRAILLE BLIND TOUCH STICKERLESS BLACK/COLOR",
+          new: "BRAILLE CUBE 3x3",
+        },
+        {
+          id: 66,
+          name: "MASTERMORPHIX 3x3 MOYU STICKERLESS COLOR",
+          new: "MASTERMORPHIX 3x3",
+        },
+        {
+          id: 67,
+          name: "SIAMES 3x3 TIPO 1 MOYU STICKERLESS COLOR",
+          new: "SIAMESE CUBE 3x3",
+        },
+        {
+          id: 68,
+          name: "SIAMES 3x3 TIPO 2 MOYU STICKERLESS COLOR",
+          new: "SIAMESE CUBE 3x3",
+        },
+        {
+          id: 69,
+          name: "MEGAMINX 2x2 MOYU STICKERLESS COLOR",
+          new: "MEGAMINX 2x2",
+        },
+        {
+          id: 70,
+          name: "MEGAMINX 3x3 MOYU STICKERLESS COLOR",
+          new: "MEGAMINX 3x3",
+        },
+        {
+          id: 71,
+          name: "OCTAEDRO FTO 3x3 FANXIN STICKERLESS BLACK/COLOR",
+          new: "OCTAHEDRON FTO 3x3",
+        },
+        {
+          id: 72,
+          name: "HEXAGONO 3x3 FANXIN STICKERLESS BLACK/COLOR",
+          new: "CUBE 3x3",
+        },
+        {
+          id: 73,
+          name: "SKEW MOYU STICKERLESS COLOR",
+          new: "CUBE ",
+        },
+        {
+          id: 74,
+          name: "SKEW MIX XMAN WINGY STICKERLESS BLACK/COLOR",
+          new: "CUBE ",
+        },
+        {
+          id: 75,
+          name: "SQUARE 1 MOYU STICKERLESS COLOR",
+          new: "CUBE ",
+        },
+        {
+          id: 76,
+          name: "FISHER MOYU STICKERLESS COLOR",
+          new: "FISHER CUBE ",
+        },
+        {
+          id: 77,
+          name: "WINDMILL MOYU STICKERLESS COLOR",
+          new: "WINDMILL CUBE ",
+        },
+        {
+          id: 78,
+          name: "FOUR LEAF CLOVER MOYU STICKERLESS COLOR",
+          new: "CUBE ",
+        },
+        {
+          id: 79,
+          name: "POLARIS MOYU STICKERLESS COLOR",
+          new: "CUBE ",
+        },
+        {
+          id: 80,
+          name: "MAPLE LEAVES SKEW MOYU STICKERLESS COLOR",
+          new: "CUBE ",
+        },
+        {
+          id: 81,
+          name: "PANDORA MOYU STICKER BLACK/COLOR",
+          new: "CUBE ",
+        },
+        {
+          id: 82,
+          name: "IVY QIYI STICKER BLACK/COLOR",
+          new: "CUBE ",
+        },
+        {
+          id: 83,
+          name: "FISHER QIYI STICKER BLACK/COLOR",
+          new: "FISHER CUBE ",
+        },
+        {
+          id: 84,
+          name: "TRIEDON 3x3 FANXIN STICKERLESS COLOR",
+          new: "CUBE ",
+        },
+        {
+          id: 85,
+          name: "PUPPET 1 MOYU STICKERLESS COLOR",
+          new: "CUBE ",
+        },
+        {
+          id: 86,
+          name: "PUPPET 2 MOYU STICKERLESS COLOR",
+          new: "CUBE ",
+        },
+        {
+          id: 87,
+          name: "SKEW X FANXIN STICKERLESS COLOR",
+          new: "CUBE ",
+        },
+        {
+          id: 88,
+          name: "STAR QIYI STICKERLESS COLOR",
+          new: "CUBE ",
+        },
+        {
+          id: 89,
+          name: "TWIST 3x3 QIYI STICKERLESS COLOR",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 90,
+          name: "AXIS QIYI STICKERLESS COLOR",
+          new: "AXIS CUBE ",
+        },
+        {
+          id: 91,
+          name: "FINHOP TIAN YUAN 1 1x1 YJ STICKERLESS COLOR",
+          new: "CUBE ",
+        },
+        {
+          id: 92,
+          name: "FINHOP TIAN YUAN 2 1x1 YJ STICKERLESS COLOR",
+          new: "CUBE ",
+        },
+        {
+          id: 93,
+          name: "FINHOP TIAN YUAN 3 1x1 YJ STICKERLESS COLOR",
+          new: "CUBE ",
+        },
+        {
+          id: 94,
+          name: "DINO 2x2 QIYI STICKER BLACK/COLOR",
+          new: "CUBE ",
+        },
+        {
+          id: 95,
+          name: "ROUND 3x3 QIYI STICKERLESS COLOR",
+          new: "CUBE ",
+        },
+        {
+          id: 96,
+          name: "OCTAGONO 3x3 JIEHUI STICKERLESS COLOR",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 97,
+          name: "3D CUBE",
+          new: "CUBE ",
+        },
+        {
+          id: 98,
+          name: "3x3 RUBIKS 1999",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 99,
+          name: "3x3 1,99",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 100,
+          name: "CUSTOM 2x2 FACE GREEN",
+          new: "CUBE 2x2 ",
+        },
+        {
+          id: 101,
+          name: "CUSTOM 2x2 FACE BLUE",
+          new: "CUBE 2x2 ",
+        },
+        {
+          id: 102,
+          name: "CUSTOM 2x2 FACE RED",
+          new: "CUBE 2x2 ",
+        },
+        {
+          id: 103,
+          name: "CUSTOM 2x2 FACE YELLOW",
+          new: "CUBE 2x2 ",
+        },
+        {
+          id: 104,
+          name: "CUSTOM 3x3 CALENDAR",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 105,
+          name: "3x3 MICRO 10MM STICKER BLACK/COLOR",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 106,
+          name: "3x3 GAN MINI 28MM STICKERLESS BLACK/COLOR",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 107,
+          name: "3x3 GAN 15 MAGLEV (EDIÇÃO ESPECIAL 10 ANOS) STICKERLESS COLOR",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 108,
+          name: "2x2 GAN 251 LEAP (EDIÇÃO ESPECIAL 10 ANOS) STICKERLESS COLOR",
+          new: "CUBE 2x2 ",
+        },
+        {
+          id: 109,
+          name: "3x3 GAN 356 ME (EDIÇÃO ESPECIAL 10 ANOS) STICKERLESS COLOR",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 110,
+          name: "3x3 GAN 330 (EDIÇÃO ESPECIAL 10 ANOS) STICKERLESS COLOR",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 111,
+          name: "3x3 GAN 330 STICKERLESS COLOR",
+          new: "CUBE 3x3",
+        },
+        {
+          id: 112,
+          name: "3x3 GAN 15 MAGLEV STICKERLESS COLOR",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 113,
+          name: "3x3 GAN 356 MAGLEV STICKERLESS COLOR",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 114,
+          name: "3x3 GAN 356 M STICKERLESS COLOR",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 115,
+          name: "3x3 GAN 356 ME (EDIÇÃO ESPECIAL POKEMON - PIKACHU) STICKERLESS COLOR",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 116,
+          name: "3x3 GAN AIR STICKERLESS BLACK/COLOR",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 117,
+          name: "3x3 GAN AIR (EDIÇÃO ESPECIAL - PARIS 2017) STICKERLESS BLACK/COLOR",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 118,
+          name: "3x3 RUBIKS (EDIÇÃO ESPECIAL - F1 MERCEDES) STICKERLESS COLOR/CARBON",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 119,
+          name: "3x3 RUBIKS (EDIÇÃO ESPECIAL - WEDNESDAY) STICKERLESS BLACK/GRAY",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 120,
+          name: "3x3 RUBIKS (EDIÇÃO ESPECIAL - DISNEY 100 ANOS) STICKERLESS SILVER/COLOR",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 121,
+          name: "3x3 RUBIKS IMPOSSIVEL STICKERLESS BLACK/COLOR",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 122,
+          name: "3x3 RUBIKS PHANTOM STICKERLESS BLACK/COLOR",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 123,
+          name: "VOID 3x3 MAGNETIC QIYI STICKERLESS COLOR",
+          new: "VOID CUBE 3x3 ",
+        },
+        {
+          id: 124,
+          name: "1x1",
+          new: "CUBE 1x1",
+        },
+        {
+          id: 125,
+          name: "OCTAEDRO FTO 2x2 QIYI MAGNETIC STICKERLESS BLACK/COLOR",
+          new: "OCTAHEDRON FTO 2x2 ",
+        },
+        {
+          id: 126,
+          name: "OCTAEDRO FTO 3x3 QIYI MAGNETIC STICKERLESS BLACK/COLOR",
+          new: "OCTAHEDRON FTO 3x3 ",
+        },
+        {
+          id: 127,
+          name: "RAINBOW BALL FANXIN BRANCO 12",
+          new: "RAINBOW BALL ",
+        },
+        {
+          id: 128,
+          name: "RAINBOW BALL FANXIN BRANCO 20",
+          new: "RAINBOW BALL ",
+        },
+        {
+          id: 129,
+          name: "3x3 CYCLONE BOYS METÁLICO MAGNÉTICO STICKERLESS COLOR",
+          new: "CUBE 3x3 ",
+        },
+        {
+          id: 130,
+          name: "MEGAMINX 3x3 MOYU STICKER BLACK/COLOR",
+          new: "MEGAMINX 3x3 ",
+        },
+      ];
 
-      // Converte rawList em um array de objetos { id: number, name: string }
-      const collection = rawList
-        .split(/\r?\n/)
-        .map((l) => l.trim())
-        .filter((l) => l)
-        .map((line) => {
-          const m = line.match(/^"\s*(\d+)\s*",\s*"\s*(.+?)\s*"$/);
-          if (!m) return null;
-          return { id: Number(m[1]), name: m[2] };
-        })
-        .filter(Boolean)
-        .sort((a, b) => a.name.localeCompare(b.name));
+      // Collection com ordenação alfabética
+      const collection = [...rawList].sort((a, b) => a.new.localeCompare(b.new));
 
       function imgPlaceholderDataURI() {
         const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'>
@@ -285,7 +794,7 @@
 
         const title = document.createElement("p");
         title.className = "title";
-        title.textContent = item.name;
+        title.textContent = item.new;
 
         const pid = document.createElement("div");
         pid.className = "id";
@@ -311,24 +820,23 @@
 
       document.addEventListener("DOMContentLoaded", renderGrid);
     </script>
-    <body>
-      <header>
-        <h1>Puzzle Collection</h1>
-        <div
-          class="count"
-          aria-live="polite"
-        >
-          <span id="count">0</span> itens
-        </div>
-      </header>
-      <main class="container">
-        <section
-          id="grid"
-          class="grid"
-          aria-label="Grade de cubos"
-        ></section>
-      </main>
-    </body>
   </head>
-  <body></body>
+  <body>
+    <header>
+      <h1>Puzzle Collection</h1>
+      <div
+        class="count"
+        aria-live="polite"
+      >
+        <span id="count">0</span> itens
+      </div>
+    </header>
+    <main class="container">
+      <section
+        id="grid"
+        class="grid"
+        aria-label="Grade de cubos"
+      ></section>
+    </main>
+  </body>
 </html>
